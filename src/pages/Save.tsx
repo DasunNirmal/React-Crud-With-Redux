@@ -7,7 +7,7 @@ import {ItemModal} from "../component/ItemModal.tsx";
 import {CustomerTable} from "../component/CustomerTable.tsx";
 import {ItemTable} from "../component/ItemTable.tsx";
 import {useDispatch, useSelector} from "react-redux";
-import {save} from "../reducers/CustomerSlice.ts";
+import {saveCustomers} from "../reducers/CustomerSlice.ts";
 
 export default function Save() {
     const customers = useSelector(state => state.customer.value)
@@ -25,7 +25,7 @@ export default function Save() {
         const customer = new Customer(name, email, phone);
         // Dispatch a plain object because Redux Toolkit expects plain JavaScript objects for actions and state.
         // Other wise it will give a error "A non-serializable value was detected in an action"
-        dispatchCustomer(save({ name: customer.name, email: customer.email, phone: customer.phone }));
+        dispatchCustomer(saveCustomers({ name: customer.name, email: customer.email, phone: customer.phone }));
     }
 
     function addItem() {
