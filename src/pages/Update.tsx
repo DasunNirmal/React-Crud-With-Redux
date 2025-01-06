@@ -7,6 +7,7 @@ import {ItemModal} from "../component/ItemModal.tsx";
 import {CustomerTable} from "../component/CustomerTable.tsx";
 import {ItemTable} from "../component/ItemTable.tsx";
 import {useDispatch, useSelector} from "react-redux";
+import {update} from "../reducers/CustomerSlice.ts";
 
 export default function Update() {
 
@@ -23,7 +24,7 @@ export default function Update() {
 
     function updateCustomer() {
         const customer = new Customer(name, email, phone);
-        dispatchCustomer({type: 'UPDATE_CUSTOMER', payload: customer});
+        dispatchCustomer(update({ name: customer.name, email: customer.email, phone: customer.phone }));
     }
 
     function updateItems() {
