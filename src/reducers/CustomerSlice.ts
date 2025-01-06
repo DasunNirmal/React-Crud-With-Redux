@@ -2,23 +2,26 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {Customer} from "../models/Customer.ts";
 
 const initialState = {
-    value: [] as Customer[]
+    value: [] as Customer[],
 }
 const CustomerSlice = createSlice({
     name: 'customer',
     initialState: initialState,
     reducers: {
-        save: (state, action: PayloadAction<Customer>) => {
+        saveCustomers: (state, action: PayloadAction<Customer>) => {
             state.value.push(action.payload);
         },
-        update: (state, action: PayloadAction<Customer>) => {
+        updateCustomers: (state, action: PayloadAction<Customer>) => {
             const index = state.value.findIndex((customer) => customer.email === action.payload.email);
             if (index > -1) {
                 state.value[index] = action.payload;
             }
+        },
+        deleteCustomers: (state, action: PayloadAction<string>) => {
+            state.value = state.value.filter((customer: Customer) => customer.email !== action.payload);
         }
     }
 })
 
-export const { save,update } = CustomerSlice.actions;
+export const { saveCustomers,updateCustomers,deleteCustomers } = CustomerSlice.actions;
 export default CustomerSlice.reducer;
