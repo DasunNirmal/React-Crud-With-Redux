@@ -1,0 +1,6 @@
+#delete-component #name,
+#delete-component #phone,
+#delete-component #itemName,
+#delete-component #qty {
+    display: none;
+}
