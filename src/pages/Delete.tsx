@@ -6,6 +6,7 @@ import {ItemModal} from "../component/ItemModal.tsx";
 import {CustomerTable} from "../component/CustomerTable.tsx";
 import {ItemTable} from "../component/ItemTable.tsx";
 import {useDispatch, useSelector} from "react-redux";
+import {deleteCustomers} from "../reducers/CustomerSlice.ts";
 
 export default function Delete() {
 
@@ -16,8 +17,7 @@ export default function Delete() {
     const [code, setCode] = useState("");
 
     function deleteCustomer() {
-        dispatchCustomer({type: 'DELETE_CUSTOMER', payload: {email }}); /*object shorthand notation when we use this it is
-         equal to {email: email}*/
+        dispatchCustomer(deleteCustomers(email));
     }
 
     function deleteItem() {
@@ -39,7 +39,7 @@ export default function Delete() {
             <div className="left-card m-3" id="delete-component">
                 <h2 className="mb-6 p-2 w-fit text-2xl">Delete Customer</h2>
 
-                <CustomerModal handleSubmit={deleteCustomer} setName={() => {}} setEmail={setEmail} setPhone={() => {}} name={() => {}} email={email} phone={() => {}}>Delete Customer</CustomerModal>
+                <CustomerModal handleSubmit={deleteCustomer} setEmail={setEmail} email={email} >Delete Customer</CustomerModal>
                 <CustomerTable customers={customers} getTableData={getTableDataCustomers}></CustomerTable>
             </div>
 
