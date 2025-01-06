@@ -10,9 +10,15 @@ const CustomerSlice = createSlice({
     reducers: {
         save: (state, action: PayloadAction<Customer>) => {
             state.value.push(action.payload);
+        },
+        update: (state, action: PayloadAction<Customer>) => {
+            const index = state.value.findIndex((customer) => customer.email === action.payload.email);
+            if (index > -1) {
+                state.value[index] = action.payload;
+            }
         }
     }
 })
 
-export const { save } = CustomerSlice.actions;
+export const { save,update } = CustomerSlice.actions;
 export default CustomerSlice.reducer;
