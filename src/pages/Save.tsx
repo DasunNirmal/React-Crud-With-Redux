@@ -10,6 +10,7 @@ import {saveCustomers} from "../reducers/CustomerSlice.ts";
 import {saveItems} from "../reducers/ItemSlice.ts";
 
 export default function Save() {
+
     const customers = useSelector(state => state.customer.value)
     const dispatchCustomer = useDispatch();
 
