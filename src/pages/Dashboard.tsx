@@ -1,12 +1,11 @@
-import {useContext} from "react";
 import {Customer} from "../models/Customer.ts";
 import {Item} from "../models/Item.ts";
-import {ItemContext} from "../store/ItemProvider.tsx";
 import {useSelector} from "react-redux";
 
 export default function Dashboard() {
     const customers = useSelector(state => state.customer.value)
-    const [items, setItems] = useContext(ItemContext);
+    const items = useSelector(state => state.item.value);
+
     return (
         <div className="grid grid-cols-2 main-section p-6">
 
