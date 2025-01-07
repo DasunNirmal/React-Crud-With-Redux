@@ -5,7 +5,6 @@ import Save from "./pages/Save.tsx";
 import Update from "./pages/Update.tsx";
 import Delete from "./pages/Delete.tsx";
 import {RootLayout} from "./component/RootLayout.tsx";
-import {ItemProvider} from "./store/ItemProvider.tsx";
 import {Provider} from "react-redux";
 import {store} from "./store/Store.ts";
 
@@ -29,9 +28,7 @@ function App() {
     return (
         <>
             <Provider store={store}>
-                <ItemProvider>
-                    <RouterProvider router={routers} />
-                </ItemProvider>
+                <RouterProvider router={routers} />
             </Provider>
         </>
     )
