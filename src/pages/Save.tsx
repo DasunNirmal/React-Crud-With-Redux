@@ -1,6 +1,5 @@
-import {useContext, useState} from "react";
+import {useState} from "react";
 import {Customer} from "../models/Customer.ts";
-import {ItemContext} from "../store/ItemProvider.tsx";
 import {Item} from "../models/Item.ts";
 import {CustomerModal} from "../component/CustomerModal.tsx";
 import {ItemModal} from "../component/ItemModal.tsx";
@@ -8,11 +7,15 @@ import {CustomerTable} from "../component/CustomerTable.tsx";
 import {ItemTable} from "../component/ItemTable.tsx";
 import {useDispatch, useSelector} from "react-redux";
 import {saveCustomers} from "../reducers/CustomerSlice.ts";
+import {saveItems} from "../reducers/ItemSlice.ts";
 
 export default function Save() {
     const customers = useSelector(state => state.customer.value)
     const dispatchCustomer = useDispatch();
-    const [items, dispatchItem] = useContext(ItemContext);
+
+    const items = useSelector(state => state.item.value);
+    const dispatchItem = useDispatch();
+
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
@@ -29,8 +32,8 @@ export default function Save() {
     }
 
     function addItem() {
-        const newItem = new Item(code, itemName, Number(qty));
-        dispatchItem({type: 'ADD_ITEM', payload: newItem});
+        const item = new Item(code, itemName, Number(qty));
+        dispatchItem(saveItems({code: item.code, itemName: item.itemName, qty: item.qty}));
     }
 
     function getTableDataCustomers(cell) {
