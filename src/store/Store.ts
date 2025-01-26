@@ -8,3 +8,5 @@ export const store = configureStore({
         item: itemSlice
     }
 });
+
+export type AppDispatch = typeof store.dispatch;
