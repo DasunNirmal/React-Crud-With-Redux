@@ -48,7 +48,7 @@ export const getItem = createAsyncThunk(
     'item/getItem',
     async () => {
         try {
-            const response = await api.get(`/view`);
+            const response = await api.get(`/get`);
             return response.data;
         } catch (error) {
             return console.log('error', error);
@@ -89,8 +89,8 @@ const itemSlice = createSlice({
                 state.map((item) => {
                     if (item.code === action.payload.code) {
                         item.code = action.payload.code;
-                        item.itemName = action.payload.itemName;
-                        item.qty = action.payload.qty;
+                        item.name = action.payload.name;
+                        item.quantity = action.payload.quantity;
                     }
                 });
             })
@@ -102,9 +102,9 @@ const itemSlice = createSlice({
             });
         builder
             .addCase(deleteItem.fulfilled, (state, action) => {
-                return state.filter((item) => item.code !== action.payload.code);
+                return state.filter((item) => item.code !== action.payload);
             })
-            .addCase(deleteItem.rejected, (state, a, updateItemsction) => {
+            .addCase(deleteItem.rejected, (state, action) => {
                 console.log('Failed to delete Item : ', action.payload);
             })
             .addCase(deleteItem.pending, (state, action) => {
@@ -112,7 +112,7 @@ const itemSlice = createSlice({
             });
         builder
             .addCase(getItem.fulfilled, (state, action) => {
-                action.payload.map((item: Item) => state.push(item));
+                return action.payload || [];
             })
             .addCase(getItem.rejected, (state, action) => {
                 console.log('Failed to get Item : ', action.payload);
