@@ -2,7 +2,7 @@ import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {Customer} from "../models/Customer.ts";
 import axios from "axios";
 
-const initialState : Customer[] = [];
+export const initialState : Customer[] = [];
 
 const api = axios.create({
     baseURL: 'http://localhost:3000/customer'
@@ -48,7 +48,7 @@ export const getCustomer = createAsyncThunk(
     'customer/getCustomer',
     async () => {
         try {
-            const response = await api.get(`/view`);
+            const response = await api.get(`/get`);
             return response.data;
         } catch (error) {
             return console.log('error', error);
@@ -98,7 +98,7 @@ const CustomerSlice = createSlice({
                 console.log('Failed to update Customer : ', action.payload);
             })
             .addCase(updateCustomer.pending, (state, action) => {
-                console.log('Pending updating Customer : ', action.payload);
+                console.log('Pending updating Customer : ', action.payload,);
             });
         builder
             .addCase(deleteCustomer.fulfilled, (state, action) => {
@@ -111,8 +111,8 @@ const CustomerSlice = createSlice({
                 console.log('Pending deleting Customer : ', action.payload);
             });
         builder
-            .addCase(getCustomer.fulfilled, (state, action) => {
-                action.payload.map((customer: Customer) => state.push(customer));
+            .addCase(getCustomer.fulfilled, (state , action) => {
+                return action.payload || [];
             })
             .addCase(getCustomer.rejected, (state, action) => {
                 console.log('Failed to get Customer : ', action.payload);
