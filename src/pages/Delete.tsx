@@ -1,12 +1,12 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import './Delete.css'
 import {CustomerModal} from "../component/CustomerModal.tsx";
 import {ItemModal} from "../component/ItemModal.tsx";
 import {CustomerTable} from "../component/CustomerTable.tsx";
 import {ItemTable} from "../component/ItemTable.tsx";
 import {useDispatch, useSelector} from "react-redux";
-import {deleteCustomer} from "../reducers/CustomerSlice.ts";
-import {deleteItem} from "../reducers/ItemSlice.ts";
+import {deleteCustomer, getCustomer} from "../reducers/CustomerSlice.ts";
+import {deleteItem, getItem} from "../reducers/ItemSlice.ts";
 import {AppDispatch} from "../store/Store.ts";
 import {Customer} from "../models/Customer.ts";
 import {Item} from "../models/Item.ts";
@@ -22,13 +22,36 @@ export default function Delete() {
     const [email, setEmail] = useState("");
     const [code, setCode] = useState("");
 
-    function deleteCustomers() {
-        dispatchCustomer(deleteCustomer(email));
-    }
+    useEffect(() => {
+        if (customers.length === 0) {
+            dispatchCustomer(getCustomer());
+        }
+    },[dispatchCustomer, customers.length]);
 
-    function deleteItems() {
-        dispatchItem(deleteItem(code));
-    }
+    useEffect(() => {
+        if (items.length === 0) {
+            dispatchItem(getItem());
+        }
+    },[dispatchItem, items.length]);
+
+    const deleteCustomers = async () => {
+        try {
+            await dispatchCustomer(deleteCustomer(email));
+            dispatchCustomer(getCustomer());
+        } catch (e) {
+            console.error("Failed to delete customer:", e);
+        }
+    };
+
+    const deleteItems = async () => {
+        try {
+            await dispatchItem(deleteItem(code));
+            dispatchItem(getItem());
+        }
+        catch (e) {
+            console.error("Failed to delete item:", e);
+        }
+    };
 
     function getTableDataCustomers(cell) {
         setEmail(cell.email);
