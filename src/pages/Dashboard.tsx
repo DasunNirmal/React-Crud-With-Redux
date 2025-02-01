@@ -1,10 +1,28 @@
 import {Customer} from "../models/Customer.ts";
 import {Item} from "../models/Item.ts";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect} from "react";
+import {getCustomer} from "../reducers/CustomerSlice.ts";
+import {AppDispatch} from "../store/Store.ts";
+import {getItem} from "../reducers/ItemSlice.ts";
 
 export default function Dashboard() {
     const customers = useSelector((state: { customer: Customer[] }) => state.customer);
+    const dispatchCustomer = useDispatch<AppDispatch>();
     const items = useSelector((state: { item:  Item[] }) => state.item);
+    const dispatchItem = useDispatch<AppDispatch>();
+
+    useEffect(() => {
+        if (customers.length === 0) {
+            dispatchCustomer(getCustomer());
+        }
+    }, [dispatchCustomer, customers.length]);
+
+    useEffect(() => {
+        if (items.length === 0) {
+            dispatchItem(getItem());
+        }
+    },[dispatchItem, items.length]);
 
     return (
         <div className="grid grid-cols-2 main-section p-6">
@@ -48,8 +66,8 @@ export default function Dashboard() {
                     {items.map((items: Item) => (
                         <tr key={items.code}>
                             <td>{items.code}</td>
-                            <td>{items.itemName}</td>
-                            <td>{items.qty}</td>
+                            <td>{items.name}</td>
+                            <td>{items.quantity}</td>
                         </tr>
                     ))}
                     <tr>
