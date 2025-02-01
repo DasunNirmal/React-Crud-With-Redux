@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Customer} from "../models/Customer.ts";
 import {Item} from "../models/Item.ts";
 import {CustomerModal} from "../component/CustomerModal.tsx";
@@ -6,8 +6,8 @@ import {ItemModal} from "../component/ItemModal.tsx";
 import {CustomerTable} from "../component/CustomerTable.tsx";
 import {ItemTable} from "../component/ItemTable.tsx";
 import {useDispatch, useSelector} from "react-redux";
-import {updateCustomer} from "../reducers/CustomerSlice.ts";
-import {updateItem} from "../reducers/ItemSlice.ts";
+import {getCustomer, updateCustomer} from "../reducers/CustomerSlice.ts";
+import {getItem, updateItem} from "../reducers/ItemSlice.ts";
 import {AppDispatch} from "../store/Store.ts";
 
 export default function Update() {
@@ -26,15 +26,37 @@ export default function Update() {
     const [itemName, setItemName] = useState("");
     const [qty, setQty] = useState("");
 
-    function updateCustomers() {
-        const customer = new Customer(name, email, phone);
-        dispatchCustomer(updateCustomer(customer));
-    }
+    useEffect(() => {
+        if (customers.length === 0) {
+            dispatchCustomer(getCustomer());
+        }
+    },[dispatchCustomer, customers.length]);
 
-    function updateItems() {
+    useEffect(() => {
+        if (items.length === 0) {
+            dispatchItem(getItem());
+        }
+    },[dispatchItem, items.length]);
+
+    const updateCustomers = async () => {
+        const customer = new Customer(name, email, phone);
+        try {
+            await dispatchCustomer(updateCustomer(customer));
+            dispatchCustomer(getCustomer());
+        } catch (e) {
+            console.error("Failed to update customer:", e);
+        }
+    };
+
+    const updateItems = async () => {
         const item = new Item(code, itemName, Number(qty));
-        dispatchItem(updateItem(item));
-    }
+        try {
+            await dispatchItem(updateItem(item));
+            dispatchItem(getItem());
+        } catch (e) {
+            console.error("Failed to update item:", e);
+        }
+    };
 
     function getTableDataCustomers(cell) {
         setName(cell.name);
