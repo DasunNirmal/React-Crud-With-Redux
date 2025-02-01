@@ -1,12 +1,12 @@
 export class Item {
     code: string;
-    itemName: string;
-    qty: number;
+    name: string;
+    quantity: number;
 
 
     constructor(code: string, itemName: string, qty: number) {
         this.code = code;
-        this.itemName = itemName;
-        this.qty = qty;
+        this.name = itemName;
+        this.quantity = qty;
     }
 }
