@@ -17,8 +17,8 @@ export function ItemTable(props) {
                         props.getTableDataItems(items)
                     }}>
                         <td>{items.code}</td>
-                        <td>{items.name}</td>
-                        <td>{items.quantity}</td>
+                        <td>{items.itemName}</td>
+                        <td>{items.qty}</td>
                     </tr>
                 ))}
                 </tbody>
