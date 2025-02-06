@@ -50,7 +50,7 @@ export default function Save() {
     };
 
     const addItems = async () => {
-        const item = new Item(code, itemName, Number(qty));
+        const item = new Item(code, itemName, qty);
         try {
             await dispatchItem(saveItem(item));
             dispatchItem(getItem());
@@ -65,7 +65,7 @@ export default function Save() {
         setPhone(cell.phone);
     }
 
-    function getTableDataItems(cell) {
+    function getTableDataItems(cell: Item) {
         setCode(cell.code);
         setItemName(cell.itemName);
         setQty(cell.qty);
