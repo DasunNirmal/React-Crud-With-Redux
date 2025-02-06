@@ -53,11 +53,11 @@ export default function Delete() {
         }
     };
 
-    function getTableDataCustomers(cell) {
+    function getTableDataCustomers(cell: Customer) {
         setEmail(cell.email);
     }
 
-    function getTableDataItems(cell) {
+    function getTableDataItems(cell: Item) {
         setCode(cell.code);
     }
 
