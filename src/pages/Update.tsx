@@ -49,7 +49,7 @@ export default function Update() {
     };
 
     const updateItems = async () => {
-        const item = new Item(code, itemName, Number(qty));
+        const item = new Item(code, itemName, qty);
         try {
             await dispatchItem(updateItem(item));
             dispatchItem(getItem());
@@ -58,13 +58,13 @@ export default function Update() {
         }
     };
 
-    function getTableDataCustomers(cell) {
+    function getTableDataCustomers(cell: Customer) {
         setName(cell.name);
         setEmail(cell.email);
         setPhone(cell.phone);
     }
 
-    function getTableDataItems(cell) {
+    function getTableDataItems(cell: Item) {
         setCode(cell.code);
         setItemName(cell.itemName);
         setQty(cell.qty);
