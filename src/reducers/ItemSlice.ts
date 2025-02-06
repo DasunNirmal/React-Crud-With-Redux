@@ -24,7 +24,7 @@ export const updateItem = createAsyncThunk(
     'item/updateItem',
     async (item: Item) => {
         try {
-            const response = await api.put(`/update/${item.code}`, item);
+            const response = await api.patch(`/update/${item.code}`, item);
             return response.data;
         } catch (error) {
             return console.log('error', error);
