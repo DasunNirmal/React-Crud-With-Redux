@@ -66,8 +66,8 @@ export default function Dashboard() {
                     {items.map((items: Item) => (
                         <tr key={items.code}>
                             <td>{items.code}</td>
-                            <td>{items.name}</td>
-                            <td>{items.quantity}</td>
+                            <td>{items.itemName}</td>
+                            <td>{items.qty}</td>
                         </tr>
                     ))}
                     <tr>
